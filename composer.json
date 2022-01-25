@@ -1,0 +1,25 @@
+{
+  "name": "lobtao/hyperf-helper",
+  "description": "functions and server commands for hyperf",
+  "minimum-stability": "stable",
+  "keywords": ["php","hyperf","helper"],
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "lobtao",
+      "email": "lobtao@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-json": "*",
+    "hyperf/command": "~2.2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "lobtao\\helper\\": "src/"
+    },
+    "files": [
+      "lobtao/helper/functions.php"
+    ]
+  }
+}
