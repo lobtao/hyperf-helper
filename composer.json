@@ -19,7 +19,7 @@
       "lobtao\\helper\\": "src/"
     },
     "files": [
-      "lobtao/helper/functions.php"
+      "./src/functions.php"
     ]
   }
 }
