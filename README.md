@@ -12,6 +12,15 @@ return [
     ]
 ];
 ```
+config/autoload/commands.php
+```php
+return [
+    ...
+    \lobtao\helper\ServerStartCommand::class,
+    \lobtao\helper\ServerStopCommand::class,
+    \lobtao\helper\ServerStatusCommand::class,
+];
+```
 ### 调试启动服务
 ```php
 php ./bin/hyperf.php server:start
