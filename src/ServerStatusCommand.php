@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace lobtao\helper;
 
 use Hyperf\Command\Command as HyperfCommand;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Swoole\Coroutine\System;
 use Symfony\Component\Console\Input\InputOption;
 
 class ServerStatusCommand extends HyperfCommand
@@ -23,6 +26,8 @@ class ServerStatusCommand extends HyperfCommand
     }
 
     /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function handle()
     {
@@ -30,6 +35,11 @@ class ServerStatusCommand extends HyperfCommand
         // passthru('ps -ef|grep '.$app_name.'|grep -v grep');
         $pids = getPids();
         $pids = implode(',', $pids);
-        passthru("htop -p $pids");
+        $ret = System::exec('which htop');
+        if (empty($ret['output'])) {
+            stdLog()->warning('htop命令行不存在，请先安装 yum install htop / apt install htop');
+        } else {
+            passthru("htop -p $pids");
+        }
     }
 }
