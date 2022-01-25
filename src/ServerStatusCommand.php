@@ -39,7 +39,7 @@ class ServerStatusCommand extends HyperfCommand
         if (empty($ret['output'])) {
             stdLog()->warning('htop命令行不存在，请先安装 yum install htop / apt install htop');
         } else {
-            passthru("htop -p $pids");
+            passthru("htop -tp $pids");
         }
     }
 }
