@@ -25,18 +25,6 @@ php ./bin/hyperf.php server:stop -a
 ```php
 php ./bin/hyperf.php server:stop -p
 ```
-### 查看服务状态,默认为根据pid查看进程信息
-```php
-php ./bin/hyperf.php server:status
-```
-### 查看服务状态,根据app name查看进程信息
-```php
-php ./bin/hyperf.php server:status -a
-```
-### 查看服务状态,根据port查看进程信息
-```php
-php ./bin/hyperf.php server:status -p
-```
 ### 重启worker&task进程
 ```php
 php ./bin/hyperf.php server:reload
@@ -48,4 +36,16 @@ php ./bin/hyperf.php server:reload -w
 ### 重启task进程
 ```php
 php ./bin/hyperf.php server:reload -t
+```
+### 查看服务状态,默认为根据pid查看进程信息
+```php
+php ./bin/hyperf.php server:status
+```
+### 查看服务状态,根据app name查看进程信息
+```php
+php ./bin/hyperf.php server:status -a
+```
+### 查看服务状态,根据port查看进程信息
+```php
+php ./bin/hyperf.php server:status -p
 ```
