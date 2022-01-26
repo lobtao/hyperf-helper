@@ -8,7 +8,6 @@ use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Swoole\Coroutine\System;
-use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 
 class ServerStartCommand extends HyperfCommand
@@ -35,15 +34,22 @@ class ServerStartCommand extends HyperfCommand
         $option_daemonize = $this->input->hasOption('daemonize') ? $this->input->getOption('daemonize') : false;
         putenv('DAEMONIZE=' . json_encode($option_daemonize));
 
+        $log_file = BASE_PATH . '/runtime/logs/';
+        if (!file_exists($log_file)) {
+            mkdir($log_file);
+        }
+        $log_file .= 'hyperf.out.log';
+
         if ($option_daemonize) {
-            System::exec('php ' . BASE_PATH . '/bin/hyperf.php start > /dev/null &');
+            System::exec('php ' . BASE_PATH . "/bin/hyperf.php start > $log_file");
             stdLog()->info('server start success');
         } else {
             stdLog()->info('when this mode is started, there is no highlight color on the console');
             stdLog()->info('debug mode please use `php ./bin/hyperf.php start`');
             stdLog()->info('daemonize mode please use `php ./bin/hyperf.php server:start -d`');
             echo PHP_EOL;
-            passthru('php ' . BASE_PATH . '/bin/hyperf.php start');
+            // passthru('php ' . BASE_PATH . '/bin/hyperf.php start');
+            // System::exec('sh '.BASE_PATH.'/start.sh > '.$log_file);
         }
     }
 }

@@ -238,9 +238,9 @@ if (!function_exists('getPids')) {
         }
         if ($master_pid) {
             // 获取manager pid
-            $result = \Swoole\Coroutine\System::exec("ps -eLf|grep $master_pid|grep -v 'grep'|awk '{print $2}'");
+            $result = \Swoole\Coroutine\System::exec("ps -eLf|grep $master_pid|grep -v grep|awk '{print $2}'");
             $result = trim($result['output']);
-            $result = explode(PHP_EOL, $result);
+            $result = strlen($result) > 0 ? explode(PHP_EOL, $result) : [];
             foreach ($result as $value) {
                 if ($master_pid != $value) {
                     // 获取manager创建的worker、task等工作进程pid
