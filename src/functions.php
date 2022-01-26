@@ -260,7 +260,6 @@ if (!function_exists('getMasterPid')) {
      */
     function getMasterPid(): string
     {
-        // 根据hyperf.pid进程号终止
         $master_pid = '';
         // 获取master pid
         $pid_file = BASE_PATH . '/runtime/hyperf.pid';
