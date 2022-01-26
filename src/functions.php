@@ -228,7 +228,6 @@ if (!function_exists('getPids')) {
      */
     function getPids(): array
     {
-        // 根据hyperf.pid进程号终止
         $pids = [];
         $master_pid = '';
         // 获取master pid
