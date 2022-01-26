@@ -24,5 +24,10 @@
     "files": [
       "./src/functions.php"
     ]
+  },
+  "extra": {
+    "hyperf": {
+      "config": "lobtao\\helper\\ConfigProvider"
+    }
   }
 }
