@@ -22,8 +22,9 @@ class ServerReloadCommand extends HyperfCommand
     {
         parent::configure();
         $this->setDescription('server reload');
-        $this->addOption('task', '-t', InputOption::VALUE_NONE, 'reload task');
-        $this->addOption('worker', '-w', InputOption::VALUE_NONE, 'reload worker');
+        $this->addOption('task', '-t', InputOption::VALUE_NONE, 'safe reload task');
+        $this->addOption('worker', '-w', InputOption::VALUE_NONE, 'safe reload worker');
+        $this->addOption('default', '-d', InputOption::VALUE_NONE, 'safe reload worker&task');
     }
 
     /**

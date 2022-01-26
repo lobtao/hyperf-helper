@@ -22,9 +22,9 @@ class ServerStatusCommand extends HyperfCommand
     {
         parent::configure();
         $this->setDescription('server status');
-        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'process status by app name');
-        $this->addOption('port', '-p', InputOption::VALUE_NONE, 'process status by port');
-
+        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'view process status by app name');
+        $this->addOption('port', '-p', InputOption::VALUE_NONE, 'view process status by port');
+        $this->addOption('default', '-d', InputOption::VALUE_NONE, 'view process status by master pid');
     }
 
     /**
