@@ -1,5 +1,5 @@
 # hyperf-helper
-functions and server commands for hyperf
+functions and server commands for hyperf ~2.1.0/~2.2.0
 
 ### 安装
 ```bash
