@@ -60,7 +60,7 @@ class ServerStopCommand extends HyperfCommand
             // default kill process by hyperf.pid
             $master_pid = getMasterPid();
             if (empty($master_pid)) {
-                stdLog()->warning('server not found');
+                stdLog()->warning("server pid:{$master_pid} not found");
                 return;
             }
             $master_pid = intval($master_pid);
