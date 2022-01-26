@@ -61,7 +61,7 @@ class ServerStatusCommand extends HyperfCommand
             // default kill process by hyperf.pid
             $pids = getPids();
             if (count($pids) <= 1) {
-                stdLog()->info('server not started');
+                stdLog()->info('server not exists');
                 return;
             }
         }
