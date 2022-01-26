@@ -37,3 +37,15 @@ php ./bin/hyperf.php server:status -a
 ```php
 php ./bin/hyperf.php server:status -p
 ```
+### 重启worker&task进程
+```php
+php ./bin/hyperf.php server:reload
+```
+### 重启worker进程
+```php
+php ./bin/hyperf.php server:reload -w
+```
+### 重启task进程
+```php
+php ./bin/hyperf.php server:reload -t
+```
