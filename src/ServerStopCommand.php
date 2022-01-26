@@ -21,7 +21,7 @@ class ServerStopCommand extends HyperfCommand
     {
         parent::configure();
         $this->setDescription('server stop');
-        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'kill process by name');
+        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'kill process by app name');
         $this->addOption('port', '-p', InputOption::VALUE_NONE, 'kill process by port');
     }
 
@@ -56,8 +56,7 @@ class ServerStopCommand extends HyperfCommand
         } else{
             // default kill process by hyperf.pid
             $pids = getPids();
-            $pids = array_unique($pids);
-            if (count($pids) == 1) {
+            if (count($pids) <= 1) {
                 stdLog()->info('server not started');
                 return;
             }

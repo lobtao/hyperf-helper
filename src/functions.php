@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * This file is part of Hyperf.
  * @link     https://www.hyperf.io
@@ -8,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 use Hyperf\Contract\SessionInterface;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Contract\TranslatorInterface;
@@ -41,7 +43,7 @@ use Swoole\WebSocket\Server as WebSocketServer;
  *
  */
 
-if (! function_exists('container')) {
+if (!function_exists('container')) {
     /**
      * 容器实例.
      */
@@ -51,12 +53,12 @@ if (! function_exists('container')) {
     }
 }
 
-if (! function_exists('redis')) {
+if (!function_exists('redis')) {
     /**
      * redis 客户端实例.
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return \Hyperf\Redis\Redis|mixed
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function redis()
     {
@@ -64,12 +66,12 @@ if (! function_exists('redis')) {
     }
 }
 
-if (! function_exists('server')) {
+if (!function_exists('server')) {
     /**
      * server 实例 基于 swoole server.
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return Server|\Swoole\Coroutine\Server
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function server()
     {
@@ -77,12 +79,12 @@ if (! function_exists('server')) {
     }
 }
 
-if (! function_exists('frame')) {
+if (!function_exists('frame')) {
     /**
      * websocket frame 实例.
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return Frame|mixed
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function frame()
     {
@@ -90,12 +92,12 @@ if (! function_exists('frame')) {
     }
 }
 
-if (! function_exists('websocket')) {
+if (!function_exists('websocket')) {
     /**
      * websocket 实例.
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return mixed|WebSocketServer
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function websocket()
     {
@@ -103,12 +105,12 @@ if (! function_exists('websocket')) {
     }
 }
 
-if (! function_exists('cache')) {
+if (!function_exists('cache')) {
     /**
      * 缓存实例 简单的缓存.
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return CacheInterface|mixed
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function cache()
     {
@@ -116,12 +118,12 @@ if (! function_exists('cache')) {
     }
 }
 
-if (! function_exists('stdLog')) {
+if (!function_exists('stdLog')) {
     /**
      * 向控制台输出日志.
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return mixed|StdoutLoggerInterface
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function stdLog()
     {
@@ -129,7 +131,7 @@ if (! function_exists('stdLog')) {
     }
 }
 
-if (! function_exists('logger')) {
+if (!function_exists('logger')) {
     /**
      * 向日志文件记录日志.
      * @throws ContainerExceptionInterface
@@ -141,12 +143,12 @@ if (! function_exists('logger')) {
     }
 }
 
-if (! function_exists('request')) {
+if (!function_exists('request')) {
     /**
      * 请求对象
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return mixed|RequestInterface
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function request()
     {
@@ -154,12 +156,12 @@ if (! function_exists('request')) {
     }
 }
 
-if (! function_exists('response')) {
+if (!function_exists('response')) {
     /**
      * 请求回应对象
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return mixed|ResponseInterface
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function response()
     {
@@ -167,12 +169,12 @@ if (! function_exists('response')) {
     }
 }
 
-if (! function_exists('session')) {
+if (!function_exists('session')) {
     /**
      * session 对象
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return mixed|SessionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function session()
     {
@@ -180,12 +182,12 @@ if (! function_exists('session')) {
     }
 }
 
-if (! function_exists('event')) {
+if (!function_exists('event')) {
     /**
      * event 事件对象
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return EventDispatcherInterface|mixed
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function event()
     {
@@ -193,12 +195,12 @@ if (! function_exists('event')) {
     }
 }
 
-if (! function_exists('lang')) {
+if (!function_exists('lang')) {
     /**
      * lang 多语言翻译对象
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return mixed|TranslatorInterface
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function lang()
     {
@@ -206,12 +208,12 @@ if (! function_exists('lang')) {
     }
 }
 
-if (! function_exists('validator')) {
+if (!function_exists('validator')) {
     /**
      * validator 验证器.
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @return mixed|ValidatorFactoryInterface
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     function validator()
     {
@@ -219,7 +221,7 @@ if (! function_exists('validator')) {
     }
 }
 
-if (! function_exists('getPids')) {
+if (!function_exists('getPids')) {
     /**
      * validator 获取服务所有pids.
      * @return array
@@ -228,16 +230,22 @@ if (! function_exists('getPids')) {
     {
         // 根据hyperf.pid进程号终止
         $pids = [];
+        $master_pid = '';
         // 获取master pid
-        $pid = file_get_contents(BASE_PATH . '/runtime/hyperf.pid');
-        $pids[] = $pid;
-        $result = [];
-        // 获取manager pid
-        exec("ps -eLf|grep $pid|grep -v 'grep'|awk '{print $2}'", $result);
-        foreach ($result as $value) {
-            if ($pid != $value) {
-                // 获取manager创建的worker、task等工作进程pid
-                $result = exec("ps -eLf|grep $value|grep -v 'grep'|awk '{print $2}'", $pids);
+        $pid_file = BASE_PATH . '/runtime/hyperf.pid';
+        if (file_exists($pid_file)) {
+            $master_pid = file_get_contents(BASE_PATH . '/runtime/hyperf.pid');
+            $pids[] = $master_pid;
+        }
+        if ($master_pid) {
+            $result = [];
+            // 获取manager pid
+            exec("ps -eLf|grep $master_pid|grep -v 'grep'|awk '{print $2}'", $result);
+            foreach ($result as $value) {
+                if ($master_pid != $value) {
+                    // 获取manager创建的worker、task等工作进程pid
+                    $result = exec("ps -eLf|grep $value|grep -v 'grep'|awk '{print $2}'", $pids);
+                }
             }
         }
         // 进程号去重

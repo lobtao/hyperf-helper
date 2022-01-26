@@ -30,7 +30,7 @@ class ServerStartCommand extends HyperfCommand
      */
     public function handle()
     {
-        $option_daemonize = $this->input->getOption('daemonize');
+        $option_daemonize = $this->input->hasOption('daemonize')?$this->input->getOption('daemonize'):false;
         putenv('DAEMONIZE=' . json_encode($option_daemonize));
         if ($option_daemonize) {
             passthru('php ' . BASE_PATH . '/bin/hyperf.php start > /dev/null &');
