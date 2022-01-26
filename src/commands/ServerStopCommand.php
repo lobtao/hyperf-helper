@@ -24,7 +24,8 @@ class ServerStopCommand extends HyperfCommand
         $this->setDescription('server stop');
         $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'force kill process by app name');
         $this->addOption('port', '-p', InputOption::VALUE_NONE, 'force kill process by port');
-        $this->addOption('force', '-f', InputOption::VALUE_NONE, 'force kill process');
+        $this->addOption('force', '-f', InputOption::VALUE_NONE, 'force kill process by master pid');
+        $this->addOption('default', '-d', InputOption::VALUE_NONE, 'safe kill process by master pid');
     }
 
     /**
