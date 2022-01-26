@@ -81,7 +81,7 @@ class ServerStopCommand extends HyperfCommand
                         break;
                     } else {
                         if (time() - $time > 15) {
-                            stdLog()->warning("stop server fail for pid:{$master_pid} , try [php easyswoole server stop -force] again");
+                            stdLog()->warning("stop server fail for pid:{$master_pid} , try `php ./bin/hyperf.php server:stop -f` again");
                             break;
                         }
                     }
