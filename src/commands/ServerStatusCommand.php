@@ -35,8 +35,8 @@ class ServerStatusCommand extends HyperfCommand
     {
         // $app_name = config('app_name');
         // passthru('ps -ef|grep '.$app_name.'|grep -v grep');
-        $option_appname =  $this->input->hasOption('appname')?$this->input->getOption('appname'):false;
-        $option_port =  $this->input->hasOption('port')?$this->input->getOption('port'):false;
+        $option_appname = $this->input->hasOption('appname') && $this->input->getOption('appname');
+        $option_port = $this->input->hasOption('port') && $this->input->getOption('port');
         if($option_appname){
             // kill process by app name, multiple service items may have the same name
             $app_name = config('app_name');
