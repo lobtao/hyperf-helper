@@ -2,7 +2,6 @@
 functions and server commands for hyperf
 
 ### 安装
-config/autoload/server.php
 ```bash
 composer require lobtao/hyperf-helper:dev-main
 ```
