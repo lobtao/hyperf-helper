@@ -65,7 +65,7 @@ class ServerStopCommand extends HyperfCommand
             }
             $master_pid = intval($master_pid);
             if (!Process::kill($master_pid, 0)) {
-                stdLog()->warning("server :{$master_pid} not exist");
+                stdLog()->warning("server pid:{$master_pid} not found");
             } else {
                 if ($option_force) {
                     Process::kill($master_pid, SIGKILL); // force stop

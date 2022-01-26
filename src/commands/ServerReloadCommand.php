@@ -37,7 +37,7 @@ class ServerReloadCommand extends HyperfCommand
 
         $master_pid = getMasterPid();
         if(empty($master_pid)){
-            stdLog()->warning('server not found');
+            stdLog()->warning("server pid:{$master_pid} not found");
             return;
         }
         if($option_task){
