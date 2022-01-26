@@ -24,7 +24,6 @@ class ServerReloadCommand extends HyperfCommand
         parent::configure();
         $this->setDescription('server reload');
         $this->addOption('task', '-t', InputOption::VALUE_NONE, 'safe reload task');
-        $this->addOption('worker', '-w', InputOption::VALUE_NONE, 'safe reload worker');
         $this->addOption('default', '-d', InputOption::VALUE_NONE, 'safe reload worker&task');
     }
 
@@ -35,21 +34,17 @@ class ServerReloadCommand extends HyperfCommand
     public function handle()
     {
         $option_task = $this->input->hasOption('task') && $this->input->getOption('task');
-        $option_worker = $this->input->hasOption('worker') && $this->input->getOption('worker');
 
         $master_pid = getMasterPid();
         if(empty($master_pid)){
             stdLog()->warning("server pid:{$master_pid} not found");
             return;
         }
+
         if($option_task){
             // reload task process
             Process::kill(intval($master_pid), SIGUSR2); // reload task
             stdLog()->info('reload task process success');
-        }elseif ($option_worker){
-            // reload worker process
-            System::exec("kill -USR1 $master_pid"); // reload worker
-            stdLog()->info('reload worker process success');
         } else{
             // reload worker&task process
             Process::kill(intval($master_pid), SIGUSR1); // reload worker&task
