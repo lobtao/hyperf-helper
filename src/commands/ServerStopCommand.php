@@ -2,29 +2,27 @@
 
 declare(strict_types=1);
 
-namespace lobtao\helper;
+namespace lobtao\helper\commands;
 
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Swoole\Coroutine\System;
 use Symfony\Component\Console\Input\InputOption;
 
-class ServerStatusCommand extends HyperfCommand
+class ServerStopCommand extends HyperfCommand
 {
 
     public function __construct()
     {
-        parent::__construct('server:status');
+        parent::__construct('server:stop');
     }
 
     public function configure()
     {
         parent::configure();
-        $this->setDescription('server status');
-        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'process status by app name');
-        $this->addOption('port', '-p', InputOption::VALUE_NONE, 'process status by port');
-
+        $this->setDescription('server stop');
+        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'kill process by app name');
+        $this->addOption('port', '-p', InputOption::VALUE_NONE, 'kill process by port');
     }
 
     /**
@@ -33,8 +31,6 @@ class ServerStatusCommand extends HyperfCommand
      */
     public function handle()
     {
-        // $app_name = config('app_name');
-        // passthru('ps -ef|grep '.$app_name.'|grep -v grep');
         $option_appname =  $this->input->hasOption('appname')?$this->input->getOption('appname'):false;
         $option_port =  $this->input->hasOption('port')?$this->input->getOption('port'):false;
         if($option_appname){
@@ -65,12 +61,8 @@ class ServerStatusCommand extends HyperfCommand
                 return;
             }
         }
-        $pids = implode(',', $pids);
-        $ret = System::exec('which htop');
-        if (empty($ret['output'])) {
-            stdLog()->warning('htop命令行不存在，请先安装 yum install htop / apt install htop');
-        } else {
-            passthru("htop -tp $pids");
-        }
+        $pids = implode(' ', $pids);
+        exec("kill -9 $pids");
+        stdLog()->info('stop server success');
     }
 }

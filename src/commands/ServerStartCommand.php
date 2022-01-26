@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace lobtao\helper;
+namespace lobtao\helper\commands;
 
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;

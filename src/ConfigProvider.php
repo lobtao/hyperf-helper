@@ -2,6 +2,9 @@
 
 namespace lobtao\helper;
 
+use lobtao\helper\commands\ServerStartCommand;
+use lobtao\helper\commands\ServerStatusCommand;
+use lobtao\helper\commands\ServerStopCommand;
 use Swoole\Constant;
 
 class ConfigProvider
