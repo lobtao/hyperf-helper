@@ -7,39 +7,40 @@ namespace lobtao\helper;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Swoole\Coroutine\System;
 use Symfony\Component\Console\Input\InputOption;
 
-class ServerStatusCommand extends HyperfCommand
+class ServerStartCommand extends HyperfCommand
 {
 
     public function __construct()
     {
-        parent::__construct('server:status');
+        parent::__construct('server:start');
     }
 
     public function configure()
     {
         parent::configure();
-        $this->setDescription('server status');
+        $this->setDescription('server start/start -d');
+        $this->addOption('daemonize', '-d', InputOption::VALUE_NONE, 'daemonize mode');
     }
 
     /**
-     * watch pids status by htop
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
     public function handle()
     {
-        // $app_name = config('app_name');
-        // passthru('ps -ef|grep '.$app_name.'|grep -v grep');
-        $pids = getPids();
-        $pids = implode(',', $pids);
-        $ret = System::exec('which htop');
-        if (empty($ret['output'])) {
-            stdLog()->warning('htop not exists. You can `yum install htop` or `apt install htop` to install it');
+        $option_daemonize = $this->input->getOption('daemonize');
+        putenv('DAEMONIZE=' . json_encode($option_daemonize));
+        if ($option_daemonize) {
+            passthru('php ' . BASE_PATH . '/bin/hyperf.php start > /dev/null &');
+            stdLog()->info('server start success');
         } else {
-            passthru("htop -tp $pids");
+            stdLog()->info('when this mode is started, there is no highlight color on the console');
+            stdLog()->info('debug mode please use `php ./bin/hyperf.php start`');
+            stdLog()->info('daemonize mode please use `php ./bin/hyperf.php server:start -d`');
+            echo PHP_EOL;
+            passthru('php ' . BASE_PATH . '/bin/hyperf.php start');
         }
     }
 }
