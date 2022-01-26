@@ -13,7 +13,7 @@ php ./bin/hyperf.php server:start
 ```php
 php ./bin/hyperf.php server:start -d
 ```
-### stop server,default by pid
+### stop server,default by master pid
 ```php
 php ./bin/hyperf.php server:stop
 ```
@@ -37,7 +37,7 @@ php ./bin/hyperf.php server:reload -w
 ```php
 php ./bin/hyperf.php server:reload -t
 ```
-### view server status, default by pid
+### view server status, default by master pid
 ```php
 php ./bin/hyperf.php server:status
 ```
