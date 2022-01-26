@@ -7,6 +7,7 @@ namespace lobtao\helper\commands;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 
 class ServerStopCommand extends HyperfCommand
@@ -23,6 +24,7 @@ class ServerStopCommand extends HyperfCommand
         $this->setDescription('server stop');
         $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'kill process by app name');
         $this->addOption('port', '-p', InputOption::VALUE_NONE, 'kill process by port');
+        $this->addOption('force', '-f', InputOption::VALUE_NONE, 'force kill process');
     }
 
     /**
@@ -33,6 +35,7 @@ class ServerStopCommand extends HyperfCommand
     {
         $option_appname = $this->input->hasOption('appname') && $this->input->getOption('appname');
         $option_port = $this->input->hasOption('port') && $this->input->getOption('port');
+        $option_force = $this->input->hasOption('force') && $this->input->getOption('force');
         if($option_appname){
             // kill process by app name, multiple service items may have the same name
             $app_name = config('app_name');
@@ -55,11 +58,36 @@ class ServerStopCommand extends HyperfCommand
             }
         } else{
             // default kill process by hyperf.pid
-            $pids = getPids();
-            if (count($pids) <= 1) {
+            $master_pid = getMasterPid();
+            if (empty($master_pid)) {
                 stdLog()->warning('server not found');
                 return;
             }
+            $master_pid = intval($master_pid);
+            if (!Process::kill($master_pid, 0)) {
+                stdLog()->warning("pid :{$master_pid} not exist");
+            } else {
+                if ($option_force) {
+                    Process::kill($master_pid, SIGKILL); // force stop
+                } else {
+                    Process::kill($master_pid, SIGTERM); // safe stop
+                }
+                //等待5秒
+                $time = time();
+                while (true) {
+                    usleep(1000);
+                    if (!Process::kill($master_pid, 0)) {
+                        stdLog()->info("server stop for pid {$master_pid} at " . date("Y-m-d H:i:s"));
+                        break;
+                    } else {
+                        if (time() - $time > 15) {
+                            stdLog()->warning("stop server fail for pid:{$master_pid} , try [php easyswoole server stop -force] again");
+                            break;
+                        }
+                    }
+                }
+            }
+            return;
         }
         $pids = implode(' ', $pids);
         exec("kill -9 $pids");
