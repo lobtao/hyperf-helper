@@ -237,13 +237,17 @@ if (!function_exists('getPids')) {
             $pids[] = $master_pid;
         }
         if ($master_pid) {
-            $result = [];
             // 获取manager pid
-            exec("ps -eLf|grep $master_pid|grep -v 'grep'|awk '{print $2}'", $result);
+            $result = \Swoole\Coroutine\System::exec("ps -eLf|grep $master_pid|grep -v 'grep'|awk '{print $2}'");
+            $result = trim($result['output']);
+            $result = explode(PHP_EOL, $result);
             foreach ($result as $value) {
                 if ($master_pid != $value) {
                     // 获取manager创建的worker、task等工作进程pid
-                    $result = exec("ps -eLf|grep $value|grep -v 'grep'|awk '{print $2}'", $pids);
+                    $tmp = \Swoole\Coroutine\System::exec("ps -eLf|grep $value|grep -v grep|awk '{print $2}'");
+                    $tmp = trim($tmp['output']);
+                    $tmp = explode(PHP_EOL, $tmp);
+                    $pids = array_merge($pids, $tmp);
                 }
             }
         }

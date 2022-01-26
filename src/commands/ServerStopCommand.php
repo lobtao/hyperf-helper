@@ -7,6 +7,7 @@ namespace lobtao\helper\commands;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Swoole\Coroutine\System;
 use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -40,10 +41,9 @@ class ServerStopCommand extends HyperfCommand
         if($option_appname){
             // kill process by app name, multiple service items may have the same name
             $app_name = config('app_name');
-            $pids = [];
-            exec("ps -ef|grep '.$app_name.'|grep -v grep|awk '{print $2}'", $pids); // |xargs kill -9
-            $pids = array_unique($pids);
-            if(count($pids) == 0){
+            $result = System::exec("ps -ef|grep '.$app_name.'|grep -v grep|awk '{print $2}'"); // |xargs kill -9
+            $pids = trim($result['output']);
+            if(empty($pids)){
                 stdLog()->warning('server not found');
                 return;
             }
@@ -51,9 +51,9 @@ class ServerStopCommand extends HyperfCommand
             // kill process by port, cannot be used in wsl
             $servers = config('server.servers');
             $port = $servers[0]['port'];
-            exec("lsof -i:".$port."|awk '{if (NR>1){print $2}}'", $pids); // |xargs kill -9
-            $pids = array_unique($pids);
-            if(count($pids) == 0){
+            $result = System::exec("lsof -i:".$port."|awk '{if (NR>1){print $2}}'"); // |xargs kill -9
+            $pids = trim($result['output']);
+            if(empty($pids)){
                 stdLog()->warning('server not found');
                 return;
             }
@@ -90,8 +90,9 @@ class ServerStopCommand extends HyperfCommand
             }
             return;
         }
+        $pids = explode(PHP_EOL, $pids);
         $pids = implode(' ', $pids);
-        exec("kill -9 $pids");
+        System::exec("kill -9 $pids");
         stdLog()->info('stop server success');
     }
 }

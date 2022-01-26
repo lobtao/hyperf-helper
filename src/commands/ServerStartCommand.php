@@ -7,6 +7,8 @@ namespace lobtao\helper\commands;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Swoole\Coroutine\System;
+use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 
 class ServerStartCommand extends HyperfCommand
@@ -30,10 +32,11 @@ class ServerStartCommand extends HyperfCommand
      */
     public function handle()
     {
-        $option_daemonize = $this->input->hasOption('daemonize')?$this->input->getOption('daemonize'):false;
+        $option_daemonize = $this->input->hasOption('daemonize') ? $this->input->getOption('daemonize') : false;
         putenv('DAEMONIZE=' . json_encode($option_daemonize));
+
         if ($option_daemonize) {
-            passthru('php ' . BASE_PATH . '/bin/hyperf.php start > /dev/null &');
+            System::exec('php ' . BASE_PATH . '/bin/hyperf.php start > /dev/null &');
             stdLog()->info('server start success');
         } else {
             stdLog()->info('when this mode is started, there is no highlight color on the console');

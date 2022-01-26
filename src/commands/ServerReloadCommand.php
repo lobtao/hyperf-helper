@@ -7,6 +7,7 @@ namespace lobtao\helper\commands;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Swoole\Coroutine\System;
 use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -47,7 +48,7 @@ class ServerReloadCommand extends HyperfCommand
             stdLog()->info('reload task process success');
         }elseif ($option_worker){
             // reload worker process
-            exec("kill -USR1 $master_pid"); // reload worker
+            System::exec("kill -USR1 $master_pid"); // reload worker
             stdLog()->info('reload worker process success');
         } else{
             // reload worker&task process
