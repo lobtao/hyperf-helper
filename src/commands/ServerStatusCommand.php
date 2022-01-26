@@ -44,7 +44,7 @@ class ServerStatusCommand extends HyperfCommand
             exec("ps -ef|grep '.$app_name.'|grep -v grep|awk '{print $2}'", $pids); // |xargs kill -9
             $pids = array_unique($pids);
             if(count($pids) == 0){
-                stdLog()->info('server not found');
+                stdLog()->warning('server not found');
                 return;
             }
         }elseif ($option_port){
@@ -54,14 +54,14 @@ class ServerStatusCommand extends HyperfCommand
             exec("lsof -i:".$port."|awk '{if (NR>1){print $2}}'", $pids); // |xargs kill -9
             $pids = array_unique($pids);
             if(count($pids) == 0){
-                stdLog()->info('server not found');
+                stdLog()->warning('server not found');
                 return;
             }
         } else{
             // default kill process by hyperf.pid
             $pids = getPids();
             if (count($pids) <= 1) {
-                stdLog()->info('server not found');
+                stdLog()->warning('server not found');
                 return;
             }
         }
