@@ -223,7 +223,7 @@ if (!function_exists('validator')) {
 
 if (!function_exists('getPids')) {
     /**
-     * validator 获取服务所有pids.
+     * 获取服务所有pids.
      * @return array
      */
     function getPids(): array
@@ -250,5 +250,23 @@ if (!function_exists('getPids')) {
         }
         // 进程号去重
         return array_unique($pids);
+    }
+}
+
+if (!function_exists('getMasterPid')) {
+    /**
+     * 获取服务master pid.
+     * @return string
+     */
+    function getMasterPid(): string
+    {
+        // 根据hyperf.pid进程号终止
+        $master_pid = '';
+        // 获取master pid
+        $pid_file = BASE_PATH . '/runtime/hyperf.pid';
+        if (file_exists($pid_file)) {
+            $master_pid = file_get_contents(BASE_PATH . '/runtime/hyperf.pid');
+        }
+        return $master_pid;
     }
 }
