@@ -7,40 +7,39 @@ namespace lobtao\helper;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Swoole\Coroutine\System;
 use Symfony\Component\Console\Input\InputOption;
 
-class ServerStartCommand extends HyperfCommand
+class ServerStatusCommand extends HyperfCommand
 {
 
     public function __construct()
     {
-        parent::__construct('server:start');
+        parent::__construct('server:status');
     }
 
     public function configure()
     {
         parent::configure();
-        $this->setDescription('server start/start -d');
-        $this->addOption('DAEMONIZE', '-d', InputOption::VALUE_NONE, '是否优化');
+        $this->setDescription('server status');
     }
 
     /**
+     * watch pids status by htop
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
     public function handle()
     {
-        $DAEMONIZE = $this->input->getOption('DAEMONIZE');
-        putenv('DAEMONIZE=' . json_encode($DAEMONIZE));
-        if ($DAEMONIZE) {
-            passthru('php ' . BASE_PATH . '/bin/hyperf.php start > /dev/null &');
-            stdLog()->info('启动服务成功');
+        // $app_name = config('app_name');
+        // passthru('ps -ef|grep '.$app_name.'|grep -v grep');
+        $pids = getPids();
+        $pids = implode(',', $pids);
+        $ret = System::exec('which htop');
+        if (empty($ret['output'])) {
+            stdLog()->warning('htop not exists. You can `yum install htop` or `apt install htop` to install it');
         } else {
-            stdLog()->info('该方式启动，控制台无高亮颜色');
-            stdLog()->info('调试模式请使用 php ./bin/hyperf.php start');
-            stdLog()->info('常驻模式请使用 php ./bin/hyperf.php server:start -d');
-            echo PHP_EOL;
-            passthru('php ' . BASE_PATH . '/bin/hyperf.php start');
+            passthru("htop -tp $pids");
         }
     }
 }
