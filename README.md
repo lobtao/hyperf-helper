@@ -41,3 +41,7 @@ php ./bin/hyperf.php server:status -a
 ```php
 php ./bin/hyperf.php server:status -p
 ```
+### restart server
+```php
+php ./bin/hyperf.php server:restart
+```
