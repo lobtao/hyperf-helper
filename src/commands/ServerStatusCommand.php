@@ -69,13 +69,26 @@ class ServerStatusCommand extends HyperfCommand
                 return;
             }
         }
-        $pids = implode(',', $pids);
-        $ret = System::exec('htop -v'); // 1.htop 2.top
-        if (empty(trim($ret['output']))) {
-            stdLog()->info("please install `yum install htop -y` or `apt install htop -y`");
-            passthru("top -p $pids");
-        } else {
-            passthru("htop -tp $pids");
+        if(PHP_OS == 'Darwin'){
+            $ret = System::exec('htop -V'); // 1.htop 2.top
+            if (empty(trim($ret['output']))) {
+                stdLog()->info("please install `brew install htop`");
+                // $pids = implode(' -pid ', $pids);
+                // passthru("top -pid $pids -stats ppid,pid,user,cpu,mem,threads,time,state,command");
+            }else{
+                $pids = implode(',', $pids);
+                passthru("sudo htop -p $pids");
+            }
+        }else{
+            $pids = implode(',', $pids);
+            $ret = System::exec('htop -v'); // 1.htop 2.top
+            if (empty(trim($ret['output']))) {
+                stdLog()->info("please install `yum install htop -y` or `apt install htop -y`");
+                // passthru("top -p $pids");
+            } else {
+                passthru("sudo htop -p $pids"); // ubuntu not support -t
+            }
         }
+
     }
 }
