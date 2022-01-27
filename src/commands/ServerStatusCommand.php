@@ -72,6 +72,7 @@ class ServerStatusCommand extends HyperfCommand
         $pids = implode(',', $pids);
         $ret = System::exec('htop -v'); // 1.htop 2.top
         if (empty(trim($ret['output']))) {
+            stdLog()->info("please install `yum install htop -y` or `apt install htop -y`");
             passthru("top -p $pids");
         } else {
             passthru("htop -tp $pids");
