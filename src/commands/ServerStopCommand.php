@@ -23,10 +23,10 @@ class ServerStopCommand extends HyperfCommand
     {
         parent::configure();
         $this->setDescription('server stop');
-        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'force kill process by app name');
-        $this->addOption('port', '-p', InputOption::VALUE_NONE, 'force kill process by port');
-        $this->addOption('force', '-f', InputOption::VALUE_NONE, 'force kill process by master pid');
-        $this->addOption('default', '-d', InputOption::VALUE_NONE, 'safe kill process by master pid');
+        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'force stop process by app name');
+        $this->addOption('port', '-p', InputOption::VALUE_NONE, 'force stop process by port');
+        $this->addOption('force', '-f', InputOption::VALUE_NONE, 'force stop process by master pid');
+        $this->addOption('default', '-d', InputOption::VALUE_NONE, 'safe stop process by master pid');
     }
 
     /**
@@ -47,6 +47,11 @@ class ServerStopCommand extends HyperfCommand
                 stdLog()->warning('server not found');
                 return;
             }
+
+            $pids = explode(PHP_EOL, $pids);
+            $pids = implode(' ', $pids);
+            System::exec("kill -9 $pids");
+            stdLog()->info("force stop server success by app name `$app_name`");
         }elseif ($option_port){
             // kill process by port, cannot be used in wsl
             $servers = config('server.servers');
@@ -57,6 +62,10 @@ class ServerStopCommand extends HyperfCommand
                 stdLog()->warning('server not found');
                 return;
             }
+            $pids = explode(PHP_EOL, $pids);
+            $pids = implode(' ', $pids);
+            System::exec("kill -9 $pids");
+            stdLog()->info("force stop server success by port `$port`");
         } else{
             // default kill process by hyperf.pid
             $master_pid = getMasterPid();
@@ -78,7 +87,7 @@ class ServerStopCommand extends HyperfCommand
                 while (true) {
                     usleep(1000);
                     if (!Process::kill($master_pid, 0)) {
-                        stdLog()->info("server stop for pid {$master_pid} at " . date("Y-m-d H:i:s"));
+                        stdLog()->info(($option_force?'force':'safe')." stop server success by master pid {$master_pid}");
                         break;
                     } else {
                         if (time() - $time > 15) {
@@ -88,11 +97,6 @@ class ServerStopCommand extends HyperfCommand
                     }
                 }
             }
-            return;
         }
-        $pids = explode(PHP_EOL, $pids);
-        $pids = implode(' ', $pids);
-        System::exec("kill -9 $pids");
-        stdLog()->info('stop server success');
     }
 }
