@@ -8,6 +8,7 @@ use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Swoole\Coroutine\System;
+use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 
 class ServerStartCommand extends HyperfCommand
@@ -40,6 +41,13 @@ class ServerStartCommand extends HyperfCommand
         }
         $log_file .= 'hyperf.out.log';
 
+        $master_pid = getMasterPid();
+        // // already running hyperf process
+        if(!empty($master_pid) && Process::kill(intval($master_pid), 0)){
+            stdLog()->warning("server is already running by master pid $master_pid");
+            return;
+        }
+        // only run daemonize mode
         if ($option_daemonize) {
             System::exec('php ' . BASE_PATH . "/bin/hyperf.php start > $log_file");
             stdLog()->info('server start success');

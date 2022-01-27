@@ -8,6 +8,7 @@ use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Swoole\Coroutine\System;
+use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 
 class ServerStatusCommand extends HyperfCommand
@@ -60,16 +61,18 @@ class ServerStatusCommand extends HyperfCommand
             $pids = explode(PHP_EOL, $pids);
         } else{
             // default kill process by hyperf.pid master pid
-            $pids = getPids();
-            if (count($pids) <= 1) {
-                stdLog()->warning('server not found');
+            $master_pid = getMasterPid();
+            if(!empty($master_pid) && Process::kill(intval($master_pid), 0)){
+                $pids = getPids();
+            }else{
+                stdLog()->warning("server not found by master pid $master_pid");
                 return;
             }
         }
         $pids = implode(',', $pids);
         $ret = System::exec('which htop'); // 1.htop 2.top
         if (empty(trim($ret['output']))) {
-            passthru("top -tp $pids");
+            passthru("top -p $pids");
         } else {
             passthru("htop -tp $pids");
         }

@@ -269,6 +269,6 @@ if (!function_exists('getMasterPid')) {
         if (file_exists($pid_file)) {
             $master_pid = file_get_contents(BASE_PATH . '/runtime/hyperf.pid');
         }
-        return $master_pid;
+        return trim($master_pid);
     }
 }
