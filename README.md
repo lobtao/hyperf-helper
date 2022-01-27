@@ -21,7 +21,7 @@ php ./bin/hyperf.php server:stop -a
 ```php
 php ./bin/hyperf.php server:stop -p
 ```
-### safe reload worker&task process
+### safe reload worker&task process, default
 ```php
 php ./bin/hyperf.php server:reload
 ```
