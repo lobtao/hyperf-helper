@@ -3,6 +3,7 @@
 namespace lobtao\helper;
 
 use lobtao\helper\commands\ServerReloadCommand;
+use lobtao\helper\commands\ServerReStartCommand;
 use lobtao\helper\commands\ServerStartCommand;
 use lobtao\helper\commands\ServerStatusCommand;
 use lobtao\helper\commands\ServerStopCommand;
@@ -17,7 +18,8 @@ class ConfigProvider
                 ServerStartCommand::class,
                 ServerStopCommand::class,
                 ServerStatusCommand::class,
-                ServerReloadCommand::class
+                ServerReloadCommand::class,
+                ServerReStartCommand::class,
             ],
             'server' => [
                 'settings' => [

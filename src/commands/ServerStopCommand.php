@@ -69,20 +69,19 @@ class ServerStopCommand extends HyperfCommand
         } else{
             // default kill process by hyperf.pid
             $master_pid = getMasterPid();
-            $master_pid = intval($master_pid);
-            if (empty($master_pid) || !Process::kill($master_pid, 0)) {
-                stdLog()->warning("server pid:{$master_pid} not found");
+            if (empty($master_pid) || !Process::kill(intval($master_pid), 0)) {
+                stdLog()->warning("server not found");
             } else {
                 if ($option_force) {
-                    Process::kill($master_pid, SIGKILL); // force stop
+                    Process::kill(intval($master_pid), SIGKILL); // force stop
                 } else {
-                    Process::kill($master_pid, SIGTERM); // safe stop
+                    Process::kill(intval($master_pid), SIGTERM); // safe stop
                 }
                 //等待5秒
                 $time = time();
                 while (true) {
                     usleep(1000);
-                    if (!Process::kill($master_pid, 0)) {
+                    if (!Process::kill(intval($master_pid), 0)) {
                         stdLog()->info(($option_force?'force':'safe')." stop server success by master pid {$master_pid}");
                         break;
                     } else {
