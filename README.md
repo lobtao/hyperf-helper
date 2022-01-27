@@ -5,10 +5,6 @@ functions and server commands for hyperf
 ```bash
 composer require lobtao/hyperf-helper:dev-main
 ```
-### 调试启动服务
-```php
-php ./bin/hyperf.php server:start
-```
 ### 常驻启动服务
 ```php
 php ./bin/hyperf.php server:start -d
