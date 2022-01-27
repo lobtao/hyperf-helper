@@ -70,14 +70,23 @@ class ServerStatusCommand extends HyperfCommand
             }
         }
         if(PHP_OS == 'Darwin'){
-            $pids = implode(' -pid ', $pids);
-            passthru("top -pid $pids -stats ppid,pid,user,cpu,mem,threads,time,state,command");
+            $ret = System::exec('htop -V'); // 1.htop 2.top
+            if (empty(trim($ret['output']))) {
+                stdLog()->info("please install `brew install htop`");
+                // $pids = implode(' -pid ', $pids);
+                // passthru("top -pid $pids -stats ppid,pid,user,cpu,mem,threads,time,state,command");
+            }else{
+                $pids = implode(',', $pids);
+                passthru("sudo htop -tp $pids");
+            }
+
+            // passthru('sudo htop');
         }else{
             $pids = implode(',', $pids);
             $ret = System::exec('htop -v'); // 1.htop 2.top
             if (empty(trim($ret['output']))) {
                 stdLog()->info("please install `yum install htop -y` or `apt install htop -y`");
-                passthru("top -p $pids");
+                // passthru("top -p $pids");
             } else {
                 passthru("htop -tp $pids");
             }
