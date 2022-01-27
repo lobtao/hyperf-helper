@@ -79,8 +79,6 @@ class ServerStatusCommand extends HyperfCommand
                 $pids = implode(',', $pids);
                 passthru("sudo htop -tp $pids");
             }
-
-            // passthru('sudo htop');
         }else{
             $pids = implode(',', $pids);
             $ret = System::exec('htop -v'); // 1.htop 2.top
