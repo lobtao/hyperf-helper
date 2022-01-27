@@ -44,10 +44,12 @@ class ServerStartCommand extends HyperfCommand
             System::exec('php ' . BASE_PATH . "/bin/hyperf.php start > $log_file");
             stdLog()->info('server start success');
         } else {
-            stdLog()->info('when this mode is started, there is no highlight color on the console');
+            // stdLog()->info('when this mode is started, there is no highlight color on the console');
             stdLog()->info('debug mode please use `php ./bin/hyperf.php start`');
             stdLog()->info('daemonize mode please use `php ./bin/hyperf.php server:start -d`');
-            echo PHP_EOL;
+            // echo PHP_EOL;
+            // passthru('php ' . BASE_PATH . '/bin/hyperf.php start');
+            // echo PHP_EOL;
             // passthru('php ' . BASE_PATH . '/bin/hyperf.php start');
             // System::exec('sh '.BASE_PATH.'/start.sh > '.$log_file);
         }

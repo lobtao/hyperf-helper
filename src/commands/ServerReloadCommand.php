@@ -7,7 +7,6 @@ namespace lobtao\helper\commands;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Swoole\Coroutine\System;
 use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 

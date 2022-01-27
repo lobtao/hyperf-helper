@@ -5,10 +5,6 @@ server commands for hyperf ~2.1.0/~2.2.0
 ```bash
 composer require lobtao/hyperf-helper:dev-main
 ```
-### debug mode start server
-```php
-php ./bin/hyperf.php server:start
-```
 ### daemonize mode start server
 ```php
 php ./bin/hyperf.php server:start -d
@@ -25,15 +21,11 @@ php ./bin/hyperf.php server:stop -a
 ```php
 php ./bin/hyperf.php server:stop -p
 ```
-### reload worker&task process
+### safe reload worker&task process, default
 ```php
 php ./bin/hyperf.php server:reload
 ```
-### reload worker process
-```php
-php ./bin/hyperf.php server:reload -w
-```
-### reload task process
+### safe reload task process only
 ```php
 php ./bin/hyperf.php server:reload -t
 ```
