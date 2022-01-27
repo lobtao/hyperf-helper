@@ -70,7 +70,7 @@ class ServerStatusCommand extends HyperfCommand
             }
         }
         $pids = implode(',', $pids);
-        $ret = System::exec('which htop'); // 1.htop 2.top
+        $ret = System::exec('htop -v'); // 1.htop 2.top
         if (empty(trim($ret['output']))) {
             passthru("top -p $pids");
         } else {
