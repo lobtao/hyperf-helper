@@ -1,6 +1,6 @@
 {
   "name": "lobtao/hyperf-helper",
-  "description": "functions and server commands for hyperf",
+  "description": "server commands for hyperf ~2.1.0/~2.2.0",
   "minimum-stability": "stable",
   "keywords": ["php","hyperf","helper"],
   "license": "proprietary",
@@ -11,8 +11,7 @@
     }
   ],
   "require": {
-    "ext-json": "*",
-    "hyperf/command": "~2.2.0"
+    "ext-json": "*"
   },
   "require-dev": {
     "swoole/ide-helper": "^4.5"

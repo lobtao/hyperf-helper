@@ -223,12 +223,11 @@ if (!function_exists('validator')) {
 
 if (!function_exists('getPids')) {
     /**
-     * validator 获取服务所有pids.
+     * 获取服务所有pids.
      * @return array
      */
     function getPids(): array
     {
-        // 根据hyperf.pid进程号终止
         $pids = [];
         $master_pid = '';
         // 获取master pid
@@ -238,17 +237,38 @@ if (!function_exists('getPids')) {
             $pids[] = $master_pid;
         }
         if ($master_pid) {
-            $result = [];
             // 获取manager pid
-            exec("ps -eLf|grep $master_pid|grep -v 'grep'|awk '{print $2}'", $result);
+            $result = \Swoole\Coroutine\System::exec("ps -eLf|grep $master_pid|grep -v grep|awk '{print $2}'");
+            $result = trim($result['output']);
+            $result = strlen($result) > 0 ? explode(PHP_EOL, $result) : [];
             foreach ($result as $value) {
                 if ($master_pid != $value) {
                     // 获取manager创建的worker、task等工作进程pid
-                    $result = exec("ps -eLf|grep $value|grep -v 'grep'|awk '{print $2}'", $pids);
+                    $tmp = \Swoole\Coroutine\System::exec("ps -eLf|grep $value|grep -v grep|awk '{print $2}'");
+                    $tmp = trim($tmp['output']);
+                    $tmp = explode(PHP_EOL, $tmp);
+                    $pids = array_merge($pids, $tmp);
                 }
             }
         }
         // 进程号去重
         return array_unique($pids);
+    }
+}
+
+if (!function_exists('getMasterPid')) {
+    /**
+     * 获取服务master pid.
+     * @return string
+     */
+    function getMasterPid(): string
+    {
+        $master_pid = '';
+        // 获取master pid
+        $pid_file = BASE_PATH . '/runtime/hyperf.pid';
+        if (file_exists($pid_file)) {
+            $master_pid = file_get_contents(BASE_PATH . '/runtime/hyperf.pid');
+        }
+        return $master_pid;
     }
 }

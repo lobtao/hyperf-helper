@@ -7,6 +7,8 @@ namespace lobtao\helper\commands;
 use Hyperf\Command\Command as HyperfCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Swoole\Coroutine\System;
+use Swoole\Process;
 use Symfony\Component\Console\Input\InputOption;
 
 class ServerReloadCommand extends HyperfCommand
@@ -21,8 +23,8 @@ class ServerReloadCommand extends HyperfCommand
     {
         parent::configure();
         $this->setDescription('server reload');
-        $this->addOption('task', '-t', InputOption::VALUE_NONE, 'reload task');
-        $this->addOption('worker', '-w', InputOption::VALUE_NONE, 'reload worker');
+        $this->addOption('task', '-t', InputOption::VALUE_NONE, 'safe reload task only');
+        $this->addOption('default', '-d', InputOption::VALUE_NONE, 'safe reload worker&task');
     }
 
     /**
@@ -32,25 +34,20 @@ class ServerReloadCommand extends HyperfCommand
     public function handle()
     {
         $option_task = $this->input->hasOption('task') && $this->input->getOption('task');
-        $option_worker = $this->input->hasOption('worker') && $this->input->getOption('worker');
 
         $master_pid = getMasterPid();
         if(empty($master_pid)){
-            stdLog()->warning('server not exists');
+            stdLog()->warning("server pid:{$master_pid} not found");
             return;
         }
+
         if($option_task){
             // reload task process
-            exec("kill -USR2 $master_pid");
+            Process::kill(intval($master_pid), SIGUSR2); // reload task
             stdLog()->info('reload task process success');
-        }elseif ($option_worker){
-            // reload worker process
-            exec("kill -USR1 $master_pid");
-            stdLog()->info('reload worker process success');
         } else{
             // reload worker&task process
-            exec("kill -USR1 $master_pid");
-            exec("kill -USR2 $master_pid");
+            Process::kill(intval($master_pid), SIGUSR1); // reload worker&task
             stdLog()->info('reload worker&task process success');
         }
     }

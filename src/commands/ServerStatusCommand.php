@@ -22,9 +22,9 @@ class ServerStatusCommand extends HyperfCommand
     {
         parent::configure();
         $this->setDescription('server status');
-        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'process status by app name');
-        $this->addOption('port', '-p', InputOption::VALUE_NONE, 'process status by port');
-
+        $this->addOption('appname', '-a', InputOption::VALUE_NONE, 'view process status by app name');
+        $this->addOption('port', '-p', InputOption::VALUE_NONE, 'view process status by port');
+        $this->addOption('default', '-d', InputOption::VALUE_NONE, 'view process status by master pid');
     }
 
     /**
@@ -40,35 +40,36 @@ class ServerStatusCommand extends HyperfCommand
         if($option_appname){
             // kill process by app name, multiple service items may have the same name
             $app_name = config('app_name');
-            $pids = [];
-            exec("ps -ef|grep '.$app_name.'|grep -v grep|awk '{print $2}'", $pids); // |xargs kill -9
-            $pids = array_unique($pids);
-            if(count($pids) == 0){
-                stdLog()->info('server not exists');
+            $result = System::exec("ps -ef|grep '.$app_name.'|grep -v grep|awk '{print $2}'"); // |xargs kill -9
+            $pids = trim($result['output']);
+            if(empty($pids)){
+                stdLog()->warning('server not found');
                 return;
             }
+            $pids = explode(PHP_EOL, $pids);
         }elseif ($option_port){
             // kill process by port, cannot be used in wsl
             $servers = config('server.servers');
             $port = $servers[0]['port'];
-            exec("lsof -i:".$port."|awk '{if (NR>1){print $2}}'", $pids); // |xargs kill -9
-            $pids = array_unique($pids);
-            if(count($pids) == 0){
-                stdLog()->info('server not exists');
+            $result = System::exec("lsof -i:".$port."|awk '{if (NR>1){print $2}}'"); // |xargs kill -9
+            $pids = trim($result['output']);
+            if(empty($pids)){
+                stdLog()->warning('server not found');
                 return;
             }
+            $pids = explode(PHP_EOL, $pids);
         } else{
-            // default kill process by hyperf.pid
+            // default kill process by hyperf.pid master pid
             $pids = getPids();
             if (count($pids) <= 1) {
-                stdLog()->info('server not started');
+                stdLog()->warning('server not found');
                 return;
             }
         }
         $pids = implode(',', $pids);
-        $ret = System::exec('which htop');
-        if (empty($ret['output'])) {
-            stdLog()->warning('htop命令行不存在，请先安装 yum install htop / apt install htop');
+        $ret = System::exec('which htop'); // 1.htop 2.top
+        if (empty(trim($ret['output']))) {
+            passthru("top -tp $pids");
         } else {
             passthru("htop -tp $pids");
         }
