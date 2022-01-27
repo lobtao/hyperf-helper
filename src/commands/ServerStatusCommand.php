@@ -77,7 +77,7 @@ class ServerStatusCommand extends HyperfCommand
                 // passthru("top -pid $pids -stats ppid,pid,user,cpu,mem,threads,time,state,command");
             }else{
                 $pids = implode(',', $pids);
-                passthru("sudo htop -p $pids");
+                passthru("sudo htop -tp $pids");
             }
         }else{
             $pids = implode(',', $pids);
@@ -86,7 +86,7 @@ class ServerStatusCommand extends HyperfCommand
                 stdLog()->info("please install `yum install htop -y` or `apt install htop -y`");
                 // passthru("top -p $pids");
             } else {
-                passthru("sudo htop -p $pids"); // ubuntu not support -t
+                passthru("sudo htop -p $pids");
             }
         }
 
