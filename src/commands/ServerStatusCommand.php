@@ -77,7 +77,7 @@ class ServerStatusCommand extends HyperfCommand
                 // passthru("top -pid $pids -stats ppid,pid,user,cpu,mem,threads,time,state,command");
             }else{
                 $pids = implode(',', $pids);
-                passthru("sudo htop -tp $pids");
+                passthru("sudo htop -p $pids");
             }
         }else{
             $pids = implode(',', $pids);
