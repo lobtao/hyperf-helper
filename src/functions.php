@@ -238,13 +238,13 @@ if (!function_exists('getPids')) {
         }
         if ($master_pid) {
             // 获取manager pid
-            $result = \Swoole\Coroutine\System::exec("ps -eLf|grep $master_pid|grep -v grep|awk '{print $2}'");
+            $result = \Swoole\Coroutine\System::exec("ps -ef|grep $master_pid|grep -v grep|awk '{print $2}'");
             $result = trim($result['output']);
             $result = strlen($result) > 0 ? explode(PHP_EOL, $result) : [];
             foreach ($result as $value) {
                 if ($master_pid != $value) {
                     // 获取manager创建的worker、task等工作进程pid
-                    $tmp = \Swoole\Coroutine\System::exec("ps -eLf|grep $value|grep -v grep|awk '{print $2}'");
+                    $tmp = \Swoole\Coroutine\System::exec("ps -ef|grep $value|grep -v grep|awk '{print $2}'");
                     $tmp = trim($tmp['output']);
                     $tmp = explode(PHP_EOL, $tmp);
                     $pids = array_merge($pids, $tmp);
