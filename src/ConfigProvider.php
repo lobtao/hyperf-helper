@@ -27,7 +27,21 @@ class ConfigProvider
                     // Constant::OPTION_RELOAD_ASYNC => true, // 设置异步重启开关 swoole default
                     // Constant::OPTION_MAX_WAIT_TIME => 3, // 设置 Worker 进程收到停止服务通知后最大等待时间 swoole default
                 ]
-            ]
+            ],
+            'publish' => [
+                [
+                    'id' => 'server.sh',
+                    'description' => 'The config for server command.',
+                    'source' => __DIR__ . '/../publish/server.sh',
+                    'destination' => BASE_PATH . '/server.sh',
+                ],
+                [
+                    'id' => 'start.sh',
+                    'description' => 'The config for server command.',
+                    'source' => __DIR__ . '/../publish/start.sh',
+                    'destination' => BASE_PATH . '/start.sh',
+                ],
+            ],
         ];
     }
 }
