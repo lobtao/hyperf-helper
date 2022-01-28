@@ -45,3 +45,15 @@ php ./bin/hyperf.php server:status -p
 ```php
 php ./bin/hyperf.php server:restart
 ```
+### quick shell
+```shell
+1. php ./bin/hyperf.php vendor:publish lobtao/hyperf-helper
+2. chmod +x ./start.sh ./server.sh
+3. command list
+./start.sh
+./server.sh start -d
+./server.sh restart
+./server.sh reload
+./server.sh stop
+./server.sh status
+```
