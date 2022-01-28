@@ -7,7 +7,6 @@
 
 # start server with www
 # sudo -H -u www ./server.sh start -d
-# sudo -H -u www ./server.sh start -d
 # sudo -H -u www ./server.sh restart
 # sudo -H -u www ./server.sh reload
 # sudo -H -u www ./server.sh stop
