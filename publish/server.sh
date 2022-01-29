@@ -12,4 +12,5 @@
 # sudo -H -u www ./server.sh stop
 # sudo -H -u www ./server.sh status
 
+# php执行文件的路径最好使用绝对路径,不受系统其它配置环境的影响
 php ./bin/hyperf.php server:$1 $2
