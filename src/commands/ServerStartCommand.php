@@ -36,11 +36,12 @@ class ServerStartCommand extends HyperfCommand
     {
         $option_daemonize = $this->input->hasOption('daemonize') ? $this->input->getOption('daemonize') : false;
         putenv('DAEMONIZE=' . json_encode($option_daemonize));
-        $log_file = BASE_PATH . '/runtime/logs/';
-        if (!file_exists($log_file)) {
-            mkdir($log_file);
-        }
-        $log_file .= 'hyperf.out.log';
+
+        // $log_file = BASE_PATH . '/runtime/logs/';
+        // if (!file_exists($log_file)) {
+        //     mkdir($log_file);
+        // }
+        // $log_file .= 'hyperf.out.log';
 
         $master_pid = getMasterPid();
         // // already running hyperf process
@@ -50,7 +51,7 @@ class ServerStartCommand extends HyperfCommand
         }
         // only run daemonize mode
         if ($option_daemonize) {
-            System::exec('php ' . BASE_PATH . "/bin/hyperf.php start >> $log_file"); // > /dev/null  | >> $log_file
+            System::exec('php ' . BASE_PATH . "/bin/hyperf.php start > /dev/null"); // > /dev/null  | >> $log_file
             stdLog()->info('server start success');
         } else {
             // stdLog()->info('when this mode is started, there is no highlight color on the console');
