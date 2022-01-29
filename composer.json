@@ -1,6 +1,6 @@
 {
   "name": "lobtao/hyperf-helper",
-  "description": "quickly start -d/reload/restart/stop server, support hyperf ~2.1.0/~2.2.0",
+  "description": "quick start -d/reload/restart/stop server, support hyperf ~2.1.0/~2.2.0",
   "minimum-stability": "stable",
   "keywords": ["php","hyperf","helper"],
   "license": "proprietary",

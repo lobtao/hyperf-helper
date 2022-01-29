@@ -1,5 +1,5 @@
 # hyperf-helper
-quickly start -d/reload/restart/stop server, support hyperf ~2.1.0/~2.2.0
+quick start -d/reload/restart/stop server, support hyperf ~2.1.0/~2.2.0
 
 ### install
 ```bash
