@@ -1,8 +1,7 @@
 # hyperf-helper
-quick start -d/reload/restart/stop server
-support hyperf ~2.1.0 & ~2.2.0
-support CentOS7+, Ubuntu 18.0.4+, macOS
-
+#### 1. quick start -d/reload/restart/stop server
+#### 2. support hyperf ~2.1.0 & ~2.2.0
+#### 3. support CentOS7+, Ubuntu 18.0.4+, macOS
 ### install
 ```bash
 composer require lobtao/hyperf-helper:dev-main
