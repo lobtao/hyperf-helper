@@ -282,7 +282,11 @@ if (!function_exists('getPhpPath')) {
     function getPhpPath(): string
     {
         $pid = posix_getpid();
-        $result = System::exec("ps -e|grep $pid|grep -v grep|awk '{print $4}'");
+        if(PHP_OS == 'Darwin'){
+            $result = System::exec("ps -e|grep $pid|grep -v grep|awk '{print $(NF-2)}'");
+        }else{
+            $result = System::exec("ls -l /proc/{$pid}|grep exe|awk '{print $(NF)}'");
+        }
         return trim($result['output']);
     }
 }
