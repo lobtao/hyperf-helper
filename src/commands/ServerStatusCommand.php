@@ -70,6 +70,7 @@ class ServerStatusCommand extends HyperfCommand
             }
         }
         if(PHP_OS == 'Darwin'){
+            // macOS
             $ret = System::exec('htop -V'); // 1.htop 2.top
             if (empty(trim($ret['output']))) {
                 stdLog()->info("please install `brew install htop`");
@@ -80,6 +81,7 @@ class ServerStatusCommand extends HyperfCommand
                 passthru("sudo htop -p $pids");
             }
         }else{
+            // CentOS/Ubuntu
             $pids = implode(',', $pids);
             $ret = System::exec('htop -v'); // 1.htop 2.top
             if (empty(trim($ret['output']))) {
