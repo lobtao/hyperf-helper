@@ -13,6 +13,12 @@ class ConfigProvider
 {
     public function __invoke(): array
     {
+        $option_daemonize = env('DAEMONIZE', false);
+        if ($option_daemonize) {
+            $log_file = BASE_PATH . '/runtime/logs/hyperf.out.log';
+        } else {
+            $log_file = '';
+        }
         return [
             'commands' => [
                 ServerStartCommand::class,
@@ -21,24 +27,25 @@ class ConfigProvider
                 ServerReloadCommand::class,
                 ServerReStartCommand::class,
             ],
-            'server' => [
+            'server'   => [
                 'settings' => [
-                    Constant::OPTION_DAEMONIZE => env('DAEMONIZE', false),
+                    Constant::OPTION_DAEMONIZE => $option_daemonize,
+                    Constant::OPTION_LOG_FILE  => $log_file,
                     // Constant::OPTION_RELOAD_ASYNC => true, // 设置异步重启开关 swoole default
                     // Constant::OPTION_MAX_WAIT_TIME => 3, // 设置 Worker 进程收到停止服务通知后最大等待时间 swoole default
-                ]
+                ],
             ],
-            'publish' => [
+            'publish'  => [
                 [
-                    'id' => 'server.sh',
+                    'id'          => 'server.sh',
                     'description' => 'The quick shell for server commands.',
-                    'source' => __DIR__ . '/../publish/server.sh',
+                    'source'      => __DIR__ . '/../publish/server.sh',
                     'destination' => BASE_PATH . '/server.sh',
                 ],
                 [
-                    'id' => 'start.sh',
+                    'id'          => 'start.sh',
                     'description' => 'The quick shell for server commands.',
-                    'source' => __DIR__ . '/../publish/start.sh',
+                    'source'      => __DIR__ . '/../publish/start.sh',
                     'destination' => BASE_PATH . '/start.sh',
                 ],
             ],
