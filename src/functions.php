@@ -25,6 +25,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
+use Swoole\Coroutine\System;
 use Swoole\Server;
 use Swoole\Websocket\Frame;
 use Swoole\WebSocket\Server as WebSocketServer;
@@ -270,5 +271,18 @@ if (!function_exists('getMasterPid')) {
             $master_pid = file_get_contents(BASE_PATH . '/runtime/hyperf.pid');
         }
         return trim($master_pid);
+    }
+}
+
+if (!function_exists('getPhpPath')) {
+    /**
+     * 获取当前php命令路径
+     * @return string
+     */
+    function getPhpPath(): string
+    {
+        $pid = posix_getpid();
+        $result = System::exec("ps -e|grep $pid|grep -v grep|awk '{print $4}'");
+        return trim($result['output']);
     }
 }

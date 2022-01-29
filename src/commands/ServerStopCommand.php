@@ -35,6 +35,7 @@ class ServerStopCommand extends HyperfCommand
      */
     public function handle()
     {
+        $php_path = getPhpPath();
         $option_appname = $this->input->hasOption('appname') && $this->input->getOption('appname');
         $option_port = $this->input->hasOption('port') && $this->input->getOption('port');
         $option_force = $this->input->hasOption('force') && $this->input->getOption('force');
@@ -86,7 +87,7 @@ class ServerStopCommand extends HyperfCommand
                         break;
                     } else {
                         if (time() - $time > 15) {
-                            stdLog()->warning("stop server fail for pid:{$master_pid} , try `php ./bin/hyperf.php server:stop -f` again");
+                            stdLog()->warning("stop server fail for pid:{$master_pid} , try `{$php_path} ./bin/hyperf.php server:stop -f` again");
                             break;
                         }
                     }
