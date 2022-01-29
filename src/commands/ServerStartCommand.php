@@ -52,7 +52,7 @@ class ServerStartCommand extends HyperfCommand
             // }
             // $log_file .= 'hyperf.out.log';
 
-            passthru($php_path.' ' . BASE_PATH . "/bin/hyperf.php start > /dev/null 2>&1"); // > /dev/null 2>&1 | >> $log_file 2>&1
+            System::exec($php_path.' ' . BASE_PATH . "/bin/hyperf.php start > /dev/null 2>&1"); // > /dev/null 2>&1 | >> $log_file 2>&1
             stdLog()->info('server start success');
         } else {
             // stdLog()->info('when this mode is started, there is no highlight color on the console');
