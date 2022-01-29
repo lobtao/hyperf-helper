@@ -15,7 +15,11 @@ class ConfigProvider
     {
         $option_daemonize = env('DAEMONIZE', false);
         if ($option_daemonize) {
-            $log_file = BASE_PATH . '/runtime/logs/hyperf.out.log';
+            $log_file = BASE_PATH . '/runtime/logs/';
+            if (!file_exists($log_file)) {
+                mkdir($log_file);
+            }
+            $log_file .= 'hyperf.out.log';
         } else {
             $log_file = '';
         }
