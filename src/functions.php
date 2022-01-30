@@ -284,7 +284,7 @@ if (!function_exists('getPhpPath')) {
         $pid = posix_getpid();
         if(PHP_OS == 'Darwin'){
             // macOS
-            $result = System::exec("ps -e|grep $pid|grep -v grep|awk '{print $(NF-2)}'");
+            $result = System::exec("ps -e|grep $pid|grep -v grep|awk '{print $4}'");
         }else{
             // CentOS/Ubuntu
             $result = System::exec("ls -l /proc/{$pid}|grep exe|awk '{print $(NF)}'");
