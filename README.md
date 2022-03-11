@@ -10,42 +10,52 @@ composer require lobtao/hyperf-helper:dev-main
 ### daemonize mode start server
 ```php
 php ./bin/hyperf.php server:start -d
+swoole-cli ./bin/hyperf.php server:start -d
 ```
 ### stop server,default by master pid
 ```php
 php ./bin/hyperf.php server:stop
+swoole-cli ./bin/hyperf.php server:stop
 ```
 ### stop server by app name
 ```php
 php ./bin/hyperf.php server:stop -a
+swoole-cli ./bin/hyperf.php server:stop -a
 ```
 ### stop server by port
 ```php
 php ./bin/hyperf.php server:stop -p
+swoole-cli ./bin/hyperf.php server:stop -p
 ```
 ### safe reload worker&task process, default
 ```php
 php ./bin/hyperf.php server:reload
+swoole-cli ./bin/hyperf.php server:reload
 ```
 ### safe reload task process only
 ```php
 php ./bin/hyperf.php server:reload -t
+swoole-cli ./bin/hyperf.php server:reload -t
 ```
 ### view server status, default by master pid
 ```php
 php ./bin/hyperf.php server:status
+swoole-cli ./bin/hyperf.php server:status
 ```
 ### view server status by app name
 ```php
 php ./bin/hyperf.php server:status -a
+swoole-cli ./bin/hyperf.php server:status -a
 ```
 ### view server status by port
 ```php
 php ./bin/hyperf.php server:status -p
+swoole-cli ./bin/hyperf.php server:status -p
 ```
 ### restart server
 ```php
 php ./bin/hyperf.php server:restart
+swoole-cli ./bin/hyperf.php server:restart
 ```
 ### quick shell
 ```shell
