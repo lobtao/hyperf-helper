@@ -56,19 +56,17 @@ class ServerStopCommand extends HyperfCommand
         }elseif ($option_port){
             // kill process by port, cannot be used in wsl
             $servers = config('server.servers');
-            foreach ($servers as $server){
-                $port = $server['port'];
-                $result = System::exec("lsof -i:".$port."|awk '{if (NR>1){print $2}}'"); // |xargs kill -9
-                $pids = trim($result['output']);
-                if(empty($pids)){
-                    stdLog()->warning('server not found');
-                    return;
-                }
-                $pids = explode(PHP_EOL, $pids);
-                $pids = implode(' ', $pids);
-                System::exec("kill -9 $pids");
-                stdLog()->info("force stop server success by port `$port`");
+            $port = $servers[0]['port'];
+            $result = System::exec("lsof -i:".$port."|awk '{if (NR>1){print $2}}'"); // |xargs kill -9
+            $pids = trim($result['output']);
+            if(empty($pids)){
+                stdLog()->warning('server not found');
+                return;
             }
+            $pids = explode(PHP_EOL, $pids);
+            $pids = implode(' ', $pids);
+            System::exec("kill -9 $pids");
+            stdLog()->info("force stop server success by port `$port`");
         } else{
             // default kill process by hyperf.pid
             $master_pid = getMasterPid();
