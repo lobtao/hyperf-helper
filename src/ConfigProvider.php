@@ -41,13 +41,19 @@ class ConfigProvider
             ],
         ];
 
+        $content = include_once BASE_PATH . '/config/autoload/server.php';
+        $runtime_dir = dirname($content['settings'][Constant::OPTION_PID_FILE]);
+        if(!file_exists($runtime_dir)){
+            mkdir($runtime_dir, 0777, true);
+        }
+
         $option_daemonize = env('DAEMONIZE', false);
         if ($option_daemonize) {
-            $log_file = BASE_PATH . '/runtime/logs/';
-            if (!file_exists($log_file)) {
-                mkdir($log_file);
+            $log_dir = $runtime_dir . '/logs';
+            if (!file_exists($log_dir)) {
+                mkdir($log_dir, 0777, true);
             }
-            $log_file .= 'hyperf.out.log';
+            $log_file = $log_dir . '/hyperf.out.log';
             $config['server']['settings'][Constant::OPTION_DAEMONIZE] = true;
             $config['server']['settings'][Constant::OPTION_LOG_FILE] = $log_file;
             // $config['server']['settings'][Constant::OPTION_RELOAD_ASYNC] = true; // 设置异步重启开关 swoole default

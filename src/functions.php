@@ -25,6 +25,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
+use Swoole\Constant;
 use Swoole\Coroutine\System;
 use Swoole\Server;
 use Swoole\Websocket\Frame;
@@ -230,13 +231,8 @@ if (!function_exists('getPids')) {
     function getPids(): array
     {
         $pids = [];
-        $master_pid = '';
-        // 获取master pid
-        $pid_file = BASE_PATH . '/runtime/hyperf.pid';
-        if (file_exists($pid_file)) {
-            $master_pid = file_get_contents(BASE_PATH . '/runtime/hyperf.pid');
-            $pids[] = $master_pid;
-        }
+        $master_pid = getMasterPid();
+        $pids[] = $master_pid;
         if ($master_pid) {
             // 获取manager pid
             $result = \Swoole\Coroutine\System::exec("ps -ef|grep $master_pid|grep -v grep|awk '{print $2}'");
@@ -266,9 +262,9 @@ if (!function_exists('getMasterPid')) {
     {
         $master_pid = '';
         // 获取master pid
-        $pid_file = BASE_PATH . '/runtime/hyperf.pid';
+        $pid_file = config('server.settings')[Constant::OPTION_PID_FILE];
         if (file_exists($pid_file)) {
-            $master_pid = file_get_contents(BASE_PATH . '/runtime/hyperf.pid');
+            $master_pid = file_get_contents($pid_file);
         }
         return trim($master_pid);
     }
@@ -285,6 +281,25 @@ if (!function_exists('getPhpPath')) {
         if(PHP_OS == 'Darwin'){
             // macOS
             $result = System::exec("ps -e|grep $pid|grep -v grep|awk '{print $4}'");
+        }else{
+            // CentOS/Ubuntu
+            $result = System::exec("ls -l /proc/{$pid}|grep exe|awk '{print $(NF)}'");
+        }
+        return trim($result['output']);
+    }
+}
+
+if (!function_exists('getBinPath')) {
+    /**
+     * 获取当前php 执行代码文件路径
+     * @return string
+     */
+    function getBinPath(): string
+    {
+        $pid = posix_getpid();
+        if(PHP_OS == 'Darwin'){
+            // macOS
+            $result = System::exec("ps -e|grep $pid|grep -v grep|awk '{print $5}'");
         }else{
             // CentOS/Ubuntu
             $result = System::exec("ls -l /proc/{$pid}|grep exe|awk '{print $(NF)}'");
