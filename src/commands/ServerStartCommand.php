@@ -52,8 +52,6 @@ class ServerStartCommand extends HyperfCommand
             // }
             // $log_file .= 'hyperf.out.log';
 
-            
-
             // support swoole-cli
             $cmd = $php_path.' -d swoole.use_shortname=Off ' . getBinPath() . " start > /dev/null 2>&1"; //  > /dev/null 2>&1
             // passthru($cmd);
