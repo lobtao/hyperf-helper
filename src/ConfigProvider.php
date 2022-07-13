@@ -41,7 +41,7 @@ class ConfigProvider
             ],
         ];
 
-        $content = include_once BASE_PATH . '/config/autoload/server.php';
+        $content = include BASE_PATH . '/config/autoload/server.php';
         $runtime_dir = dirname($content['settings'][Constant::OPTION_PID_FILE]);
         if(!file_exists($runtime_dir)){
             mkdir($runtime_dir, 0777, true);
