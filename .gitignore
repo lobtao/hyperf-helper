@@ -2,3 +2,4 @@
 /.idea/
 composer.lock
 publish/.DS_Store
+src/commands/.DS_Store

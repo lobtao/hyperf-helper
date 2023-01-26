@@ -27,13 +27,7 @@ class ConfigProvider
                     'description' => 'The quick shell for server commands.',
                     'source'      => __DIR__ . '/../publish/server.sh',
                     'destination' => BASE_PATH . '/server.sh',
-                ],
-                [
-                    'id'          => 'start.sh',
-                    'description' => 'The quick shell for server commands.',
-                    'source'      => __DIR__ . '/../publish/start.sh',
-                    'destination' => BASE_PATH . '/start.sh',
-                ],
+                ]
             ],
         ];
 
