@@ -96,7 +96,7 @@ php ./hyperf-skeleton.phar server:restart -d
 ### quick shell
 ```shell
 1. php ./bin/hyperf.php vendor:publish lobtao/hyperf-helper
-2. chmod +x ./start.sh ./server.sh
+2. chmod +x ./server.sh
 3. command list
 ./server.sh start
 ./server.sh start -d
