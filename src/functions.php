@@ -59,8 +59,6 @@ if (!function_exists('redis')) {
     /**
      * redis 客户端实例.
      * @return \Hyperf\Redis\Redis|mixed
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function redis()
     {
@@ -72,8 +70,6 @@ if (!function_exists('server')) {
     /**
      * server 实例 基于 swoole server.
      * @return Server|\Swoole\Coroutine\Server
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function server()
     {
@@ -85,8 +81,6 @@ if (!function_exists('frame')) {
     /**
      * websocket frame 实例.
      * @return Frame|mixed
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function frame()
     {
@@ -98,8 +92,6 @@ if (!function_exists('websocket')) {
     /**
      * websocket 实例.
      * @return mixed|WebSocketServer
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function websocket()
     {
@@ -111,8 +103,6 @@ if (!function_exists('cache')) {
     /**
      * 缓存实例 简单的缓存.
      * @return CacheInterface|mixed
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function cache()
     {
@@ -124,8 +114,6 @@ if (!function_exists('stdLog')) {
     /**
      * 向控制台输出日志.
      * @return mixed|StdoutLoggerInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function stdLog()
     {
@@ -136,8 +124,6 @@ if (!function_exists('stdLog')) {
 if (!function_exists('logger')) {
     /**
      * 向日志文件记录日志.
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     function logger(): LoggerInterface
     {
@@ -149,8 +135,6 @@ if (!function_exists('request')) {
     /**
      * 请求对象
      * @return mixed|RequestInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function request()
     {
@@ -162,8 +146,6 @@ if (!function_exists('response')) {
     /**
      * 请求回应对象
      * @return mixed|ResponseInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function response()
     {
@@ -175,8 +157,6 @@ if (!function_exists('session')) {
     /**
      * session 对象
      * @return mixed|SessionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function session()
     {
@@ -188,8 +168,6 @@ if (!function_exists('event')) {
     /**
      * event 事件对象
      * @return EventDispatcherInterface|mixed
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function event()
     {
@@ -201,8 +179,6 @@ if (!function_exists('lang')) {
     /**
      * lang 多语言翻译对象
      * @return mixed|TranslatorInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function lang()
     {
@@ -214,8 +190,6 @@ if (!function_exists('validator')) {
     /**
      * validator 验证器.
      * @return mixed|ValidatorFactoryInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     function validator()
     {
