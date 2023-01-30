@@ -3,3 +3,4 @@
 composer.lock
 publish/.DS_Store
 src/commands/.DS_Store
+.DS_Store
