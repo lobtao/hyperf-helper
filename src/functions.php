@@ -251,7 +251,16 @@ if (!function_exists('getPhpPath')) {
      */
     function getPhpPath(): string
     {
-        return $_SERVER['_'];
+        $pid = posix_getpid();
+        if(PHP_OS == 'Darwin'){
+            // macOS
+            $result = System::exec("ps -e|grep $pid|grep -v grep|awk '{print $4}'");
+        }else{
+            // CentOS/Ubuntu
+            $result = System::exec("ls -l /proc/{$pid}|grep exe|awk '{print $(NF)}'");
+        }
+        return trim($result['output']);
+        // return $_SERVER['_'];// 在 sudo -H -u www 指定用户模式下运行会有问题
     }
 }
 
