@@ -33,6 +33,12 @@ class ConfigProvider
                     'description' => 'The quick status for server commands.',
                     'source' => __DIR__ . '/../publish/status.sh',
                     'destination' => BASE_PATH . '/status.sh',
+                ],
+                [
+                    'id' => 'composer.sh',
+                    'description' => 'The quick composer for update project.',
+                    'source' => __DIR__ . '/../publish/composer.sh',
+                    'destination' => BASE_PATH . '/composer.sh',
                 ]
             ],
         ];
