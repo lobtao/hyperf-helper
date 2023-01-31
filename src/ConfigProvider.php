@@ -24,9 +24,15 @@ class ConfigProvider
             'publish' => [
                 [
                     'id' => 'server.sh',
-                    'description' => 'The quick shell for server commands.',
+                    'description' => 'The quick control for server commands.',
                     'source' => __DIR__ . '/../publish/server.sh',
                     'destination' => BASE_PATH . '/server.sh',
+                ],
+                [
+                    'id' => 'status.sh',
+                    'description' => 'The quick status for server commands.',
+                    'source' => __DIR__ . '/../publish/status.sh',
+                    'destination' => BASE_PATH . '/status.sh',
                 ]
             ],
         ];
