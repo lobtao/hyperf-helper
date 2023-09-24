@@ -35,8 +35,9 @@ class ServerStartCommand extends Command
     {
         $option_daemonize = $input->hasOption('daemonize') ? $input->getOption('daemonize') : false;
         $config = $this->container->get(ConfigInterface::class);
-        $config->set('server.settings.daemonize', $option_daemonize);
+        
         if($option_daemonize){
+            $config->set('server.settings.daemonize', true);
             stdLog()->info('start daemonize...');
         }
         $start_server = make(StartServer::class);
