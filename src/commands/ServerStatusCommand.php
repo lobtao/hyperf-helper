@@ -92,5 +92,7 @@ class ServerStatusCommand extends HyperfCommand
             }
         }
 
+        return 0;
+
     }
 }
