@@ -49,5 +49,7 @@ class ServerReloadCommand extends HyperfCommand
             Process::kill(intval($master_pid), SIGUSR1); // reload worker&task
             stdLog()->info('reload worker&task process success');
         }
+
+        return 0;
     }
 }
