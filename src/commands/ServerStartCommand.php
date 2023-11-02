@@ -42,6 +42,8 @@ class ServerStartCommand extends Command
         }
         $start_server = make(StartServer::class);
         $start_server->execute($input, $output);
+
+        return 0;
     }
 
 }
