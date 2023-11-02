@@ -94,5 +94,7 @@ class ServerStopCommand extends HyperfCommand
                 }
             }
         }
+
+        return 0;
     }
 }
